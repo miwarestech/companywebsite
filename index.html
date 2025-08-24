@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light"> <!-- default to light theme, can be toggled to dark -->
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Miwares Technology — Software • Web • Mobile</title>
+  <meta name="description" content="We design and build high‑performance software, websites, and mobile apps. Futuristic design, enterprise quality, startup speed." />
+  <meta name="keywords" content="software development, web development, mobile apps, UX, UI, SaaS, agency" />
+  <meta property="og:title" content="Miwares Technology — Software • Web • Mobile" />
+  <meta property="og:description" content="We design and build high‑performance software, websites, and mobile apps." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1'%3E%3Cstop stop-color='%2300E5FF'/%3E%3Cstop offset='1' stop-color='%237B61FF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='630' fill='%230b1020'/%3E%3Ccircle cx='600' cy='315' r='220' fill='url(%23g)' opacity='.2'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' font-size='64' fill='white' font-family='Inter,system-ui,Segoe UI,Roboto'%3EMiwares Technology%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" href="/favicon.png"/>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-2: #0f1733;
+      --text: #e8edff;
+      --muted: #a9b4d0;
+      --brand-a: #00e5ff;
+      --brand-b: #7b61ff;
+      --card: rgba(255,255,255,0.04);
+      --glass: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.12);
+      --shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.03);
+    }
+    [data-theme="light"] {
+      --bg: #f7f8ff;
+      --bg-2: #ffffff;
+      --text: #0c1230;
+      --muted: #495375;
+      --card: rgba(0,0,0,0.04);
+      --glass: rgba(255,255,255,0.8);
+      --border: rgba(0,0,0,0.08);
+      --shadow: 0 10px 30px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.5);
+    }
+
+    html, body { background: var(--bg); color: var(--text); scroll-behavior: smooth; }
+    .text-gradient { background: linear-gradient(90deg, var(--brand-a), var(--brand-b)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .btn-gradient { border: 0; background: linear-gradient(90deg, var(--brand-a), var(--brand-b)); color: #0a0f20; font-weight: 700; box-shadow: var(--shadow); }
+    .btn-outline-glass { border: 1px solid var(--border); background: transparent; color: var(--text); }
+    .btn-outline-glass:hover { background: var(--glass); }
+
+    .glass { background: radial-gradient(1200px 600px at 0% -40%, rgba(0,229,255,0.14), transparent 50%),
+                         radial-gradient(1000px 500px at 100% 140%, rgba(123,97,255,0.14), transparent 50%);
+             backdrop-filter: saturate(140%) blur(8px); border: 1px solid var(--border); box-shadow: var(--shadow); }
+
+    /* Neon underline */
+    .underline { position: relative; display: inline-block; }
+    .underline::after { content: ""; position: absolute; left: 0; right: 0; bottom: -8px; height: 3px; border-radius: 999px; background: linear-gradient(90deg, var(--brand-a), var(--brand-b)); box-shadow: 0 0 18px rgba(0,229,255,0.6), 0 0 26px rgba(123,97,255,0.6); }
+
+    /* Hero */
+    #hero { position: relative; overflow: hidden; background: radial-gradient(1200px 600px at 10% -10%, rgba(0,229,255,0.12), transparent 60%),
+                                      radial-gradient(900px 500px at 90% 110%, rgba(123,97,255,0.12), transparent 60%),
+                                      linear-gradient(180deg, var(--bg), var(--bg-2)); }
+    canvas#constellation { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+    .section { padding: 80px 0; }
+    .cardx { background: var(--card); border: 1px solid var(--border); border-radius: 18px; box-shadow: var(--shadow); }
+
+    .nav-link { color: var(--muted); }
+    .nav-link.active, .nav-link:hover { color: var(--text); }
+
+    .icon-badge { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)); border: 1px solid var(--border); }
+
+    /* Pricing */
+    .price { font-size: 48px; font-weight: 800; letter-spacing: -0.02em; }
+    .badge-trend { background: linear-gradient(90deg, var(--brand-a), var(--brand-b)); color: #0b1020; font-weight: 700; }
+
+    /* Footer */
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--text); }
+
+    /* Small tweaks */
+    .avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+    .shadow-soft { box-shadow: var(--shadow); }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(16px); transition: all .6s cubic-bezier(.2,.8,.2,1); }
+    .reveal.show { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="80" tabindex="0">
+
+  <!-- NAVBAR -->
+  <nav id="mainNav" class="navbar navbar-expand-lg sticky-top glass py-2">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#hero">
+      
+        <img src="/logo.png" alt="" width="200" height="70" class="d-inline-block align-text-top me-2">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navLinks">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navLinks">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="#work">Work</a></li>
+          <li class="nav-item"><a class="nav-link" href="#process">Process</a></li>
+          <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+          <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
+          <li class="nav-item d-flex align-items-center ms-lg-3">
+            <button id="themeToggle" class="btn btn-sm btn-outline-glass me-2"><i class="bi bi-moon-stars"></i></button>
+            <a href="#contact" class="btn btn-sm btn-gradient">Start a Project</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header id="hero" class="section pt-5">
+    <canvas id="constellation" aria-hidden="true"></canvas>
+    <div class="container position-relative">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+          <h1 class="display-4 fw-extrabold mb-3">We build <span class="underline">software</span>, websites & mobile apps — fast.</h1>
+          <p class="lead text-secondary mb-4">Ship futuristic digital products with enterprise quality and startup speed. From idea to launch, we handle strategy, design, engineering, and growth.</p>
+          <div class="d-flex gap-3">
+            <a href="#contact" class="btn btn-gradient btn-lg px-4">Get a Quote</a>
+            <a href="#work" class="btn btn-outline-glass btn-lg px-4">See Our Work</a>
+          </div>
+          <div class="d-flex gap-4 mt-4 text-secondary small">
+            <div><i class="bi bi-lightning-charge-fill me-1"></i>2–6 week MVPs</div>
+            <div><i class="bi bi-shield-check me-1"></i>Security-first</div>
+            <div><i class="bi bi-graph-up-arrow me-1"></i>ROI-focused</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="cardx glass p-4">
+            <div class="d-flex align-items-center mb-3">
+              <div class="icon-badge me-3"><i class="bi bi-cpu fs-4"></i></div>
+              <div>
+                <h5 class="mb-0">What we deliver</h5>
+                <small class="text-secondary">Full‑stack, end‑to‑end</small>
+              </div>
+            </div>
+            <div class="row g-3">
+              <div class="col-6"><div class="p-3 cardx h-100">
+                <i class="bi bi-window fs-3"></i>
+                <div class="fw-semibold mt-2">Web Apps</div>
+                <div class="text-secondary small">React, Next.js, Django, Laravel</div>
+              </div></div>
+              <div class="col-6"><div class="p-3 cardx h-100">
+                <i class="bi bi-phone fs-3"></i>
+                <div class="fw-semibold mt-2">Mobile</div>
+                <div class="text-secondary small">Flutter, React Native, Swift</div>
+              </div></div>
+              <div class="col-6"><div class="p-3 cardx h-100">
+                <i class="bi bi-cloud-check fs-3"></i>
+                <div class="fw-semibold mt-2">Cloud</div>
+                <div class="text-secondary small">AWS, Azure, GCP, Docker</div>
+              </div></div>
+              <div class="col-6"><div class="p-3 cardx h-100">
+                <i class="bi bi-shield-lock fs-3"></i>
+                <div class="fw-semibold mt-2">Security</div>
+                <div class="text-secondary small">OWASP, SSO, Compliance</div>
+              </div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CLIENT MARQUEE -->
+  <section class="py-4 border-top border-bottom border-1" style="border-color: var(--border)!important; background: linear-gradient(180deg, var(--bg-2), var(--bg));">
+    <div class="container text-center">
+      <div class="text-secondary small mb-2">Trusted by startups & enterprises</div>
+      <div class="d-flex overflow-hidden gap-5 py-1" id="marquee">
+        <div class="fw-bold opacity-75">AstraBank</div>
+        <div class="fw-bold opacity-75">Nimbus Health</div>
+        <div class="fw-bold opacity-75">Quanta.io</div>
+        <div class="fw-bold opacity-75">GlobePay</div>
+        <div class="fw-bold opacity-75">SkyLogix</div>
+        <div class="fw-bold opacity-75">TerraFoods</div>
+        <div class="fw-bold opacity-75">PolarNext</div>
+        <div class="fw-bold opacity-75">OrbitChain</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="section">
+    <div class="container">
+      <div class="row align-items-end mb-4">
+        <div class="col-lg-8">
+          <h2 class="fw-bold">Services</h2>
+          <p class="text-secondary">From discovery to deployment, we deliver scalable products with measurable impact.</p>
+        </div>
+        <div class="col-lg-4 text-lg-end"><a href="#contact" class="btn btn-outline-glass">Book a Consultation</a></div>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6 col-xl-3 reveal">
+          <div class="p-4 cardx h-100">
+            <div class="icon-badge mb-3"><i class="bi bi-easel2 fs-4"></i></div>
+            <h5>Product Strategy</h5>
+            <p class="text-secondary">Roadmapping, user research, KPI definition, and validation to build what matters.</p>
+            <ul class="text-secondary small mb-0">
+              <li>Workshops</li>
+              <li>Requirements & scoping</li>
+              <li>Architecture & technical planning</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-3 reveal">
+          <div class="p-4 cardx h-100">
+            <div class="icon-badge mb-3"><i class="bi bi-palette fs-4"></i></div>
+            <h5>UX/UI Design</h5>
+            <p class="text-secondary">Futuristic, accessible interfaces that convert and delight on all devices.</p>
+            <ul class="text-secondary small mb-0">
+              <li>Wireframes & prototypes</li>
+              <li>Design systems</li>
+              <li>Motion & micro‑interactions</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-3 reveal">
+          <div class="p-4 cardx h-100">
+            <div class="icon-badge mb-3"><i class="bi bi-code-slash fs-4"></i></div>
+            <h5>Web Development</h5>
+            <p class="text-secondary">Modern, maintainable codebases that scale—SPA, SSR, or static.</p>
+            <ul class="text-secondary small mb-0">
+              <li>React, Next.js, Vue</li>
+              <li>Node, Python, PHP</li>
+              <li>Headless CMS & APIs</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-3 reveal">
+          <div class="p-4 cardx h-100">
+            <div class="icon-badge mb-3"><i class="bi bi-phone-vibrate fs-4"></i></div>
+            <h5>Mobile Development</h5>
+            <p class="text-secondary">High‑performance native and cross‑platform apps with slick UX.</p>
+            <ul class="text-secondary small mb-0">
+              <li>iOS, Android, Flutter</li>
+              <li>React Native</li>
+              <li>CI/CD & App Store launch</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK / PORTFOLIO -->
+  <section id="work" class="section">
+    <div class="container">
+      <div class="row align-items-end mb-4">
+        <div class="col-lg-8">
+          <h2 class="fw-bold">Selected Work</h2>
+          <p class="text-secondary">A snapshot of what we've shipped recently.</p>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+          <div class="btn-group" role="group" aria-label="Filter">
+            <button class="btn btn-outline-glass active" data-filter="all">All</button>
+            <button class="btn btn-outline-glass" data-filter="web">Web</button>
+            <button class="btn btn-outline-glass" data-filter="mobile">Mobile</button>
+            <button class="btn btn-outline-glass" data-filter="cloud">Cloud</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4" id="portfolioGrid">
+        <!-- Project Card Template -->
+        <div class="col-md-6 col-xl-4 portfolio-item" data-category="web">
+          <div class="cardx overflow-hidden h-100">
+            <div class="ratio ratio-16x9 bg-dark position-relative">
+              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop" class="w-100 h-100 object-fit-cover" alt="Project"/>
+            </div>
+            <div class="p-4">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="mb-0">Quanta Analytics</h5>
+                <span class="badge rounded-pill badge-trend">Web</span>
+              </div>
+              <p class="text-secondary mb-3">Realtime SaaS dashboards with multi‑tenant RBAC and billing.</p>
+              <div class="d-flex gap-2 small text-secondary"><span>Next.js</span>•<span>Postgres</span>•<span>Stripe</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-xl-4 portfolio-item" data-category="mobile">
+          <div class="cardx overflow-hidden h-100">
+            <div class="ratio ratio-16x9 bg-dark position-relative">
+              <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1200&auto=format&fit=crop" class="w-100 h-100 object-fit-cover" alt="Project"/>
+            </div>
+            <div class="p-4">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="mb-0">Nimbus Health</h5>
+                <span class="badge rounded-pill badge-trend">Mobile</span>
+              </div>
+              <p class="text-secondary mb-3">Telemedicine app with video consults and e‑prescriptions.</p>
+              <div class="d-flex gap-2 small text-secondary"><span>Flutter</span>•<span>Firebase</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-xl-4 portfolio-item" data-category="cloud">
+          <div class="cardx overflow-hidden h-100">
+            <div class="ratio ratio-16x9 bg-dark position-relative">
+              <img src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop" class="w-100 h-100 object-fit-cover" alt="Project"/>
+            </div>
+            <div class="p-4">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="mb-0">OrbitChain</h5>
+                <span class="badge rounded-pill badge-trend">Cloud</span>
+              </div>
+              <p class="text-secondary mb-3">Kubernetes migration, observability, and cost optimization.</p>
+              <div class="d-flex gap-2 small text-secondary"><span>AWS EKS</span>•<span>Grafana</span>•<span>Terraform</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-xl-4 portfolio-item" data-category="web">
+          <div class="cardx overflow-hidden h-100">
+            <div class="ratio ratio-16x9 bg-dark position-relative">
+              <img src="https://images.unsplash.com/photo-1483478550801-ceba5fe50e8e?q=80&w=1200&auto=format&fit=crop" class="w-100 h-100 object-fit-cover" alt="Project"/>
+            </div>
+            <div class="p-4">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="mb-0">GlobePay</h5>
+                <span class="badge rounded-pill badge-trend">Web</span>
+              </div>
+              <p class="text-secondary mb-3">PCI‑ready payment gateway with anti‑fraud and ledger.</p>
+              <div class="d-flex gap-2 small text-secondary"><span>Laravel</span>•<span>MySQL</span>•<span>Redis</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-xl-4 portfolio-item" data-category="mobile">
+          <div class="cardx overflow-hidden h-100">
+            <div class="ratio ratio-16x9 bg-dark position-relative">
+              <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=1200&auto=format&fit=crop" class="w-100 h-100 object-fit-cover" alt="Project"/>
+            </div>
+            <div class="p-4">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="mb-0">TerraFoods</h5>
+                <span class="badge rounded-pill badge-trend">Mobile</span>
+              </div>
+              <p class="text-secondary mb-3">Grocery delivery app with route optimization and coupons.</p>
+              <div class="d-flex gap-2 small text-secondary"><span>React Native</span>•<span>Node</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-xl-4 portfolio-item" data-category="cloud">
+          <div class="cardx overflow-hidden h-100">
+            <div class="ratio ratio-16x9 bg-dark position-relative">
+              <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200&auto=format&fit=crop" class="w-100 h-100 object-fit-cover" alt="Project"/>
+            </div>
+            <div class="p-4">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="mb-0">SkyLogix</h5>
+                <span class="badge rounded-pill badge-trend">Cloud</span>
+              </div>
+              <p class="text-secondary mb-3">IoT pipeline with stream processing and alerting.</p>
+              <div class="d-flex gap-2 small text-secondary"><span>Kafka</span>•<span>TimescaleDB</span>•<span>AWS</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process" class="section">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="fw-bold">Our Process</h2>
+        <p class="text-secondary">Transparent, collaborative, and outcomes‑driven.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6 col-xl-3 reveal">
+          <div class="p-4 cardx h-100">
+            <div class="icon-badge mb-3"><i class="bi bi-1-circle fs-4"></i></div>
+            <h6>Discover</h6>
+            <p class="text-secondary">Workshops, user research, and technical audits to align on goals.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-3 reveal">
+          <div class="p-4 cardx h-100">
+            <div class="icon-badge mb-3"><i class="bi bi-2-circle fs-4"></i></div>
+            <h6>Design</h6>
+            <p class="text-secondary">Information architecture, wireframes, and high‑fidelity UI.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-3 reveal">
+          <div class="p-4 cardx h-100">
+            <div class="icon-badge mb-3"><i class="bi bi-3-circle fs-4"></i></div>
+            <h6>Build</h6>
+            <p class="text-secondary">Agile sprints, CI/CD, code reviews, and test automation.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-3 reveal">
+          <div class="p-4 cardx h-100">
+            <div class="icon-badge mb-3"><i class="bi bi-4-circle fs-4"></i></div>
+            <h6>Launch & Grow</h6>
+            <p class="text-secondary">Observability, A/B testing, and iterative optimization.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section" style="background: linear-gradient(180deg, var(--bg-2), var(--bg));">
+    <div class="container">
+      <div class="row g-4 align-items-center">
+        <div class="col-lg-5">
+          <h2 class="fw-bold mb-3">What clients say</h2>
+          <p class="text-secondary">Don't take our word for it—here's what partners think about working with us.</p>
+        </div>
+        <div class="col-lg-7">
+          <div class="row g-3">
+            <div class="col-md-6 reveal">
+              <div class="p-4 cardx h-100">
+                <div class="d-flex align-items-center mb-3">
+                  <img class="avatar me-3" src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=400&auto=format&fit=crop" alt="Avatar" />
+                  <div>
+                    <div class="fw-semibold">Aisha Bello</div>
+                    <small class="text-secondary">Product Lead, AstraBank</small>
+                  </div>
+                </div>
+                <p class="mb-0">“We shipped an MVP in five weeks and onboarded 10,000 users. The team felt like an extension of ours.”</p>
+              </div>
+            </div>
+            <div class="col-md-6 reveal">
+              <div class="p-4 cardx h-100">
+                <div class="d-flex align-items-center mb-3">
+                  <img class="avatar me-3" src="https://images.unsplash.com/photo-1548142813-c348350df52b?q=80&w=400&auto=format&fit=crop" alt="Avatar" />
+                  <div>
+                    <div class="fw-semibold">David Chen</div>
+                    <small class="text-secondary">CTO, GlobePay</small>
+                  </div>
+                </div>
+                <p class="mb-0">“Clean architecture, excellent communication, and zero surprises. Exactly what we needed.”</p>
+              </div>
+            </div>
+            <div class="col-md-6 reveal">
+              <div class="p-4 cardx h-100">
+                <div class="d-flex align-items-center mb-3">
+                  <img class="avatar me-3" src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2f?q=80&w=400&auto=format&fit=crop" alt="Avatar" />
+                  <div>
+                    <div class="fw-semibold">Olamide Okafor</div>
+                    <small class="text-secondary">Founder, TerraFoods</small>
+                  </div>
+                </div>
+                <p class="mb-0">“They built, launched, and iterated with speed. We hit PMF months earlier than planned.”</p>
+              </div>
+            </div>
+            <div class="col-md-6 reveal">
+              <div class="p-4 cardx h-100">
+                <div class="d-flex align-items-center mb-3">
+                  <img class="avatar me-3" src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?q=80&w=400&auto=format&fit=crop" alt="Avatar" />
+                  <div>
+                    <div class="fw-semibold">Sara Novak</div>
+                    <small class="text-secondary">COO, Nimbus Health</small>
+                  </div>
+                </div>
+                <p class="mb-0">“Designs that wowed our users and a codebase our team loves to maintain.”</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="section">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="fw-bold">Simple, transparent pricing</h2>
+        <p class="text-secondary">Engage how it fits your roadmap and budget.</p>
+      </div>
+      <div class="row g-4 align-items-stretch">
+        <div class="col-md-6 col-xl-4 reveal">
+          <div class="p-4 cardx h-100 d-flex flex-column">
+            <span class="badge rounded-pill bg-secondary align-self-start mb-2">Starter</span>
+            <div class="price">$5k–$15k</div>
+            <p class="text-secondary">Landing pages, prototypes, or small feature builds.</p>
+            <ul class="text-secondary small">
+              <li>2–4 week timeline</li>
+              <li>Dedicated designer/engineer</li>
+              <li>QA & basic analytics</li>
+            </ul>
+            <a href="#contact" class="btn btn-outline-glass mt-auto">Get Started</a>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-4 reveal">
+          <div class="p-4 cardx h-100 d-flex flex-column position-relative">
+            <span class="badge rounded-pill badge-trend align-self-start mb-2">Most Popular</span>
+            <div class="price">$20k–$60k</div>
+            <p class="text-secondary">MVPs and new product development.</p>
+            <ul class="text-secondary small">
+              <li>4–10 week timeline</li>
+              <li>Full squad (PM, Design, Eng)</li>
+              <li>CI/CD, testing, analytics</li>
+            </ul>
+            <a href="#contact" class="btn btn-gradient mt-auto">Book This</a>
+          </div>
+        </div>
+        <div class="col-md-12 col-xl-4 reveal">
+          <div class="p-4 cardx h-100 d-flex flex-column">
+            <span class="badge rounded-pill bg-secondary align-self-start mb-2">Scale</span>
+            <div class="price">$8k+/mo</div>
+            <p class="text-secondary">Augment your team with ongoing delivery.</p>
+            <ul class="text-secondary small">
+              <li>Sprint‑based retainer</li>
+              <li>Prioritized roadmap</li>
+              <li>SLAs & release management</li>
+            </ul>
+            <a href="#contact" class="btn btn-outline-glass mt-auto">Talk to Sales</a>
+          </div>
+        </div>
+      </div>
+      <div class="text-secondary small mt-3">*Pricing is indicative; actual quotes depend on scope and complexity.</div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="section" style="background: linear-gradient(180deg, var(--bg-2), var(--bg));">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <h2 class="fw-bold mb-3">FAQ</h2>
+          <p class="text-secondary">Answers to common questions about scope, collaboration, and delivery.</p>
+        </div>
+        <div class="col-lg-7">
+          <div class="accordion" id="faqAcc">
+            <div class="accordion-item cardx">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#f1">How do we start?</button>
+              </h2>
+              <div id="f1" class="accordion-collapse collapse show" data-bs-parent="#faqAcc">
+                <div class="accordion-body text-secondary">We begin with a free discovery call to align on goals, timeline, and budget. Then we propose a scope and roadmap.</div>
+              </div>
+            </div>
+            <div class="accordion-item cardx mt-3">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f2">What stacks do you use?</button>
+              </h2>
+              <div id="f2" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
+                <div class="accordion-body text-secondary">We select proven, modern stacks—typically React/Next.js, Node/Python, Postgres, and cloud on AWS/Azure/GCP. For mobile, Flutter or React Native, and native when needed.</div>
+              </div>
+            </div>
+            <div class="accordion-item cardx mt-3">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f3">Can you work with our team?</button>
+              </h2>
+              <div id="f3" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
+                <div class="accordion-body text-secondary">Yes—most engagements pair with internal teams. We integrate with your tools, attend standups, and do shared reviews.</div>
+              </div>
+            </div>
+            <div class="accordion-item cardx mt-3">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f4">Do you offer support after launch?</button>
+              </h2>
+              <div id="f4" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
+                <div class="accordion-body text-secondary">Absolutely—monitoring, bug fixes, and new features via retainers or project‑based scopes.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <h2 class="fw-bold mb-3">Tell us about your project</h2>
+          <p class="text-secondary">We'll respond within one business day.</p>
+          <form id="contactForm" class="cardx p-4">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Name</label>
+                <input class="form-control" name="name" required placeholder="Ada Lovelace" />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" name="email" required placeholder="you@company.com" />
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Company</label>
+                <input class="form-control" name="company" placeholder="Your Company Ltd" />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Budget</label>
+                <select class="form-select" name="budget" required>
+                  <option value="" selected disabled>Select a range</option>
+                  <option>Under $10k</option>
+                  <option>$10k–$25k</option>
+                  <option>$25k–$50k</option>
+                  <option>$50k+</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Timeline</label>
+                <select class="form-select" name="timeline" required>
+                  <option value="" selected disabled>When to start?</option>
+                  <option>ASAP</option>
+                  <option>2–4 weeks</option>
+                  <option>1–3 months</option>
+                  <option>3+ months</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Project details</label>
+                <textarea class="form-control" name="details" rows="5" required placeholder="What are you building? Objectives? Users? Tech preferences?"></textarea>
+              </div>
+              <div class="col-12 d-flex gap-3">
+                <button class="btn btn-gradient" type="submit">Send</button>
+                <button class="btn btn-outline-glass" type="reset">Reset</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-lg-6">
+          <div class="cardx p-4 h-100">
+            <h5>Contact</h5>
+            <div class="text-secondary">info@novaforge.dev</div>
+            <div class="text-secondary">+234 (000) 000‑0000</div>
+            <div class="text-secondary mb-3">Lagos • Remote‑first</div>
+
+            <div class="d-flex flex-wrap gap-2 mt-2">
+              <span class="badge rounded-pill bg-secondary-subtle text-secondary">React</span>
+              <span class="badge rounded-pill bg-secondary-subtle text-secondary">Next.js</span>
+              <span class="badge rounded-pill bg-secondary-subtle text-secondary">Node</span>
+              <span class="badge rounded-pill bg-secondary-subtle text-secondary">Python</span>
+              <span class="badge rounded-pill bg-secondary-subtle text-secondary">Flutter</span>
+              <span class="badge rounded-pill bg-secondary-subtle text-secondary">AWS</span>
+              <span class="badge rounded-pill bg-secondary-subtle text-secondary">Azure</span>
+              <span class="badge rounded-pill bg-secondary-subtle text-secondary">Docker</span>
+            </div>
+
+            <div class="ratio ratio-16x9 mt-4">
+              <iframe class="rounded" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Showreel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-5 border-top" style="border-color: var(--border)!important;">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="fw-bold mb-2">
+                    <img src="/logo.png" alt="" width="200" height="70" class="d-inline-block align-text-top me-2">
+</div>
+          <div class="text-secondary small">We build software products that scale. © <span id="year"></span></div>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <a class="me-3" href="#services">Services</a>
+          <a class="me-3" href="#work">Work</a>
+          <a class="me-3" href="#pricing">Pricing</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- TOAST -->
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100;">
+    <div id="toast" class="toast align-items-center text-bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">Thanks! Your message has been staged (demo). We'll reach out ASAP.</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Theme toggle
+    const themeBtn = document.getElementById('themeToggle');
+    themeBtn.addEventListener('click', () => {
+      const html = document.documentElement;
+      const light = html.getAttribute('data-theme') === 'light';
+      html.setAttribute('data-theme', light ? 'dark' : 'light');
+      themeBtn.innerHTML = light ? '<i class="bi bi-moon-stars"></i>' : '<i class="bi bi-brightness-high"></i>';
+    });
+
+    // Portfolio filter
+    const filterButtons = document.querySelectorAll('[data-filter]');
+    const items = document.querySelectorAll('.portfolio-item');
+    filterButtons.forEach(btn => btn.addEventListener('click', () => {
+      filterButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      items.forEach(card => {
+        const show = f === 'all' || card.dataset.category === f;
+        card.style.display = show ? '' : 'none';
+        if (show) card.classList.add('reveal','show');
+      });
+    }));
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Contact form demo
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Here you'd send to your backend or service (e.g., Formspree)
+      const toast = new bootstrap.Toast(document.getElementById('toast'));
+      toast.show();
+      form.reset();
+    });
+
+    // Simple marquee
+    const marquee = document.getElementById('marquee');
+    let offset = 0;
+    function tick() {
+      offset -= 0.6; // speed
+      marquee.style.transform = `translateX(${offset}px)`;
+      if (Math.abs(offset) > marquee.scrollWidth / 2) offset = 0;
+      requestAnimationFrame(tick);
+    }
+    tick();
+
+    // Constellation background (lightweight canvas animation)
+    const canvas = document.getElementById('constellation');
+    const ctx = canvas.getContext('2d');
+    let w, h, points = [];
+
+    function resize() {
+      w = canvas.width = canvas.offsetWidth;
+      h = canvas.height = canvas.offsetHeight;
+      points = Array.from({ length: Math.min(120, Math.floor(w * h / 9000)) }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
+      }));
+    }
+    window.addEventListener('resize', resize, { passive: true });
+    resize();
+
+    function draw() {
+      ctx.clearRect(0,0,w,h);
+      // points
+      ctx.fillStyle = 'rgba(255,255,255,0.8)';
+      points.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > w) p.vx *= -1;
+        if (p.y < 0 || p.y > h) p.vy *= -1;
+        ctx.beginPath(); ctx.arc(p.x, p.y, 1.2, 0, Math.PI*2); ctx.fill();
+      });
+      // lines
+      for (let i = 0; i < points.length; i++) {
+        for (let j = i + 1; j < points.length; j++) {
+          const dx = points[i].x - points[j].x;
+          const dy = points[i].y - points[j].y;
+          const dist = Math.hypot(dx, dy);
+          if (dist < 110) {
+            const alpha = 1 - (dist / 110);
+            const grad = ctx.createLinearGradient(points[i].x, points[i].y, points[j].x, points[j].y);
+            grad.addColorStop(0, 'rgba(0,229,255,' + (0.18*alpha) + ')');
+            grad.addColorStop(1, 'rgba(123,97,255,' + (0.18*alpha) + ')');
+            ctx.strokeStyle = grad; ctx.lineWidth = 0.8; ctx.beginPath();
+            ctx.moveTo(points[i].x, points[i].y); ctx.lineTo(points[j].x, points[j].y); ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+  </script>
+</body>
+</html>
